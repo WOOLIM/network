@@ -2,6 +2,7 @@ import RPi.GPIO as GPIO
 import time
 import socket
 from bluetooth import *
+from subprocess import *
 
 GPIO.setmode(GPIO.BCM)
 GPIO.setwarnings(False)
@@ -41,24 +42,33 @@ print("Waiting for connection on RFCOMM channel %d" % port)
 client_sock, client_info = server_sock.accept()
 print("Accepted connection from ", client_info)
 
+#cmd = "echo mmmm > /dev/rfcomm0"
+
+def run_cmd(cmd):
+    p = Popen(cmd, shell=True, stdout=PIPE)
+    output= p.communicate()
+    return output
 
 try: 
     while True:
-        data = client_sock.recv(1024)
-        if (data == "exit"): break
-        print("received [%s]"%data)
+        cmd = "echo mmmm > /dev/rfcomm0"
+        siba = run_cmd(cmd)
+        print(siba)
+        #data = client_sock.recv(1024)
+        #if (data == "exit"): break
+        #print("received [%s]"%data)
+        #result = subprocess.check_output(cmd, shell=True)
+        #print ("[%s]" %result)
 
         #LED Control PRT
-        if (data == "0"):
-            GPIO.output(led_pin1, False)
-            GPIO.output(led_pin2, False)
-        elif (data == "2"):
-            GPIO.output(led_pin1, True)
-            GPIO.output(led_pin2, True)
-            #server_sock.send(bytes([data]))
-            print "sending [%s]" % data   
-        elif (data == "3"):
-            led_toggle()
+        #if (data == "0"):
+            #GPIO.output(led_pin1, False)
+            #GPIO.output(led_pin2, False)
+        #elif (data == "2"):
+            #run_cmd(cmd)
+            #subprocess.call("echo abcde > /dev/rfcomm0", shell=True)
+        #elif (data == "3"):
+            #led_toggle()
 
 except IOError:
     pass
