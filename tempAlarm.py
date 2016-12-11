@@ -52,8 +52,7 @@ def run_cmd(cmd):
 try: 
     while True:
         cmd = "echo mmmm > /dev/rfcomm0"
-        siba = run_cmd(cmd)
-        print(siba)
+        run_cmd(cmd)
         #data = client_sock.recv(1024)
         #if (data == "exit"): break
         #print("received [%s]"%data)
@@ -78,4 +77,3 @@ print("disconnected")
 client_sock.close()
 server_sock.close()
 print("all done")
-        
