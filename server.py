@@ -5,6 +5,8 @@ import socket
 from bluetooth import *
 from subprocess import *
 import smbus
+
+
 GPIO.setwarnings(False)
 GPIO.setmode(GPIO.BCM)
 
@@ -36,6 +38,8 @@ s.bind((HOST, PORT))
 s.listen(1)
 conn, addr=s.accept()
 s.setsockopt(socket.IPPROTO_TCP, socket.TCP_NODELAY, 1)
+
+
 print 'Connected by', addr
 
 while True:
