@@ -31,7 +31,7 @@ humi = 0.0
 val = 0
 data = [0, 0]
 
-HOST='203.153.148.121'
+HOST='203.153.148.121' //DeskTop_IP
 PORT=5002
 s=socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 s.bind((HOST, PORT))
@@ -54,11 +54,10 @@ while True:
         val = data[0] << 8 | data[1]
         temp = -46.85 + 175.72/65536*val
         print(temp)
-        
-        if (temp > 22):
-            string_temp = str(temp)
+        if (GPIO.input(pir)==True):
+            string_temp = str("Warning")
             conn.send(string_temp)
         else:
-            string_temp = str(temp)
+            string_temp = str("Safety")
             conn.send(string_temp)
 s.close()
