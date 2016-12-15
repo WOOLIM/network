@@ -47,22 +47,30 @@ try:
         temp = -46.85 + 175.72/65536*val
         bus.write_byte(addr, cmd_humi)
         time.sleep(0.260)
- 
+	
         for i in range(0,2,1):
             data[i] = bus.read_byte(addr)
         val = data[0] << 8 | data[1]
         humi = -6.0+125.0/65536*val;
-
-	if(GPIO.input(pir) == True):
-            # if temperature is higher than 32	
-            if(temp > 22):
-                cmd = "echo mommy help me > /dev/rfcomm0"
+		
+        # if temperature is higher than 22	
+        if(temp > 22):
+		cmd = "echo Indoor Temperature is so HOT! > /dev/rfcomm0"
                 run_cmd(cmd)
-                p.start(100)
-                p.ChangeDutyCycle(90)
-                p.ChangeFrequency(329)
-                GPIO.output(led_pin1, True)
-                GPIO.output(led_pin2, True)
+	# if temperature is lower than 22
+	if(temp <= 22):
+                cmd = "echo Indoor Temperature is so COLD! > /dev/rfcomm0"
+                run_cmd(cmd)
+		
+	# if humidity is higher than 60%
+        if(humi > 60):
+		cmd = "echo Indoor Humidity is so HIGH! > /dev/rfcomm0"
+                run_cmd(cmd)
+	# if humidity is lower than 60%
+	if(humi <= 60):
+                cmd = "echo Indoor Humidity is so LOW! > /dev/rfcomm0"
+                run_cmd(cmd)
+		
         else:
             GPIO.output(led_pin1, False)
             GPIO.output(led_pin2, False)
