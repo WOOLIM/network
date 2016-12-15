@@ -3,7 +3,8 @@ import time
 import socket
 from bluetooth import *
 from subprocess import *
-import smbus
+
+
 GPIO.setwarnings(False)
 GPIO.setmode(GPIO.BCM)
 
