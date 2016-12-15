@@ -114,11 +114,25 @@ try:
     
     while 1:
         data=s.recv(8096)
-        if data>='22':
+        if data>='Warning':
             p.start(100)
             p.ChangeDutyCycle(90)
             p.ChangeFrequency(329)
-            lcd_string("Danger!!!!",LCD_LINE_1)
+            lcd_string("Warning! Somone Approach",LCD_LINE_1)
+          
+    else:
+        p.stop()
+        lcd_string("Safe State",LCD_LINE_1)
+    
+    while 1:
+        data=s.recv(8096)
+        if data>='Warning':
+            p.start(100)
+            p.ChangeDutyCycle(90)
+            p.ChangeFrequency(329)
+            lcd_string("Warning! Somone Approach",LCD_LINE_1)
+            
+            
             lcd_string("temp is %s" % (data),LCD_LINE_2)
             time.sleep(2) 
             print 'temp is high'
