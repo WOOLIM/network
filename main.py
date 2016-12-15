@@ -53,24 +53,38 @@ try:
             data[i] = bus.read_byte(addr)
         val = data[0] << 8 | data[1]
         humi = -6.0+125.0/65536*val;
+	
+	if (temp > 22):
+            
+        else:
+            string_temp = str(temp)
+            conn.send(string_temp)
 		
         # if temperature is higher than 22	
         if(temp > 22):
 		cmd = "echo Indoor Temperature is so HOT! > /dev/rfcomm0"
-                run_cmd(cmd)
+                run_cmd(cmd)		
+		string_temp = str(temp)
+            	conn.send(string_temp)
 	# if temperature is lower than 22
 	if(temp <= 22):
                 cmd = "echo Indoor Temperature is so COLD! > /dev/rfcomm0"
                 run_cmd(cmd)
+		string_temp = str(temp)
+            	conn.send(string_temp)
 		
 	# if humidity is higher than 60%
         if(humi > 60):
 		cmd = "echo Indoor Humidity is so HIGH! > /dev/rfcomm0"
                 run_cmd(cmd)
+		string_humi = str(humi)
+            	conn.send(string_humi)
 	# if humidity is lower than 60%
 	if(humi <= 60):
                 cmd = "echo Indoor Humidity is so LOW! > /dev/rfcomm0"
                 run_cmd(cmd)
+		string_humi = str(humi)
+            	conn.send(string_humi)
 		
         else:
             GPIO.output(led_pin1, False)
