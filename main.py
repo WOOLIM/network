@@ -3,6 +3,7 @@ import time
 import socket
 from bluetooth import *
 from subprocess import *
+import smbus
 
 
 GPIO.setwarnings(False)
@@ -39,27 +40,19 @@ try:
     time.sleep(0.05)
     p = GPIO.PWM(gpio_pin, 100)	
     while True:
+		
         bus.write_byte(addr, cmd_temp)
-        time.sleep(0.260)
         for i in range(0,2,1):
             data[i] = bus.read_byte(addr)
         val = data[0] << 8 | data[1]
- 
         temp = -46.85 + 175.72/65536*val
-        bus.write_byte(addr, cmd_humi)
-        time.sleep(0.260)
 	
+        bus.write_byte(addr, cmd_humi)
         for i in range(0,2,1):
             data[i] = bus.read_byte(addr)
         val = data[0] << 8 | data[1]
         humi = -6.0+125.0/65536*val;
 	
-	if (temp > 22):
-            
-        else:
-            string_temp = str(temp)
-            conn.send(string_temp)
-		
         # if temperature is higher than 22	
         if(temp > 22):
 		cmd = "echo Indoor Temperature is so HOT! > /dev/rfcomm0"
