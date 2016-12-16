@@ -53,27 +53,27 @@ try:
         val = data[0] << 8 | data[1]
         humi = -6.0+125.0/65536*val;
 	
-        # if temperature is higher than 22	
-        if(temp > 22):
+        # if temperature is higher than 26	
+        if(temp > 26):
 		cmd = "echo Indoor Temperature is so HOT! > /dev/rfcomm0"
                 run_cmd(cmd)		
 		string_temp = str(temp)
             	conn.send(string_temp)
-	# if temperature is lower than 22
-	if(temp <= 22):
+	# if temperature is lower than 21
+	if(temp <= 21):
                 cmd = "echo Indoor Temperature is so COLD! > /dev/rfcomm0"
                 run_cmd(cmd)
 		string_temp = str(temp)
             	conn.send(string_temp)
 		
-	# if humidity is higher than 60%
-        if(humi > 60):
+	# if humidity is higher than 70%
+        if(humi > 70):
 		cmd = "echo Indoor Humidity is so HIGH! > /dev/rfcomm0"
                 run_cmd(cmd)
 		string_humi = str(humi)
             	conn.send(string_humi)
-	# if humidity is lower than 60%
-	if(humi <= 60):
+	# if humidity is lower than 40%
+	if(humi <= 40):
                 cmd = "echo Indoor Humidity is so LOW! > /dev/rfcomm0"
                 run_cmd(cmd)
 		string_humi = str(humi)
