@@ -1,0 +1,43 @@
+from Tkinter import *
+import RPi.GPIO as GPIO
+
+GPIO.setwarnings(False)
+GPIO.setmode(GPIO.BCM)
+gpio_pin = 13
+scale = [261,294,329,349,392,440,493,523]
+GPIO.setup(gpio_pin, GPIO.OUT)
+p = GPIO.PWM(gpio_pin, 100)
+
+def keyUp(event):
+    p.stop()
+
+def keyDown(event):
+    x = event.char
+    p.start(100)
+    p.ChangeDutyCycle(90)
+    if x == 'a': #do
+        p.ChangeFrequency(scale[0])
+    elif x == 's': #re
+        p.ChangeFrequency(scale[1])
+    elif x == 'd': #mi
+        p.ChangeFrequency(scale[2])
+    elif x == 'f': #pa
+        p.ChangeFrequency(scale[3])
+    elif x == 'g': #sol
+        p.ChangeFrequency(scale[4])
+    elif x == 'h': #ra
+        p.ChangeFrequency(scale[5])
+    elif x == 'j': #si
+        p.ChangeFrequency(scale[6])
+    elif x == 'k': #do
+        p.ChangeFrequency(scale[7])
+
+
+piano = Tk()
+frame = Frame(piano, width=100, height=100)
+frame.bind("<KeyPress>", keyDown)
+frame.bind("<KeyRelease>", keyUp)
+frame.pack()
+frame.focus_set()
+root.mainloop()
+    
